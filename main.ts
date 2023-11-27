@@ -2,7 +2,6 @@
 // TODO: (bug) nested * is not set as optional
 // TODO: Create some parse errors in invalid cases
 // TODO: Parse normal captures in a typed tuple?
-// TODO: Ignore non-capturing groups
 
 type ReError<T extends string> = { type: T }
 
@@ -18,7 +17,7 @@ type FlagChecker<Fl extends string> =
 	        : ReError<`Invalid flag used: ${Fl}`>
 
 // deno-fmt-ignore
-export type RegExCaptureResult<Re extends string> =
+export type NamedCaptureGroup<Re extends string> =
     Re extends ""
 	    ? {}
 	    : Re extends `(?<${infer key}>${infer rest}` // `(?<{key}>{rest}`
@@ -30,6 +29,14 @@ export type RegExCaptureResult<Re extends string> =
             : Re extends `${infer _}(?<${infer rest}`
                 ? RegExCaptureResult<`(?<${rest}`>
                 : {}
+
+// deno-fmt-ignore
+export type RegExCaptureResult<Re extends string> =
+    Re extends ""
+        ? {}
+        : Re extends `(?:${infer _})${infer rest}` // `(?:{_}){rest}`
+            ? RegExCaptureResult<rest>
+            : NamedCaptureGroup<Re>
 
 export type RegExMatchResult<Re extends string> = {
 	matched: boolean

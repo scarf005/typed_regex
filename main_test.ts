@@ -125,3 +125,12 @@ Deno.test("bugs", async (t) => {
 		assertEquals(result?.name, "ar")
 	})
 })
+
+Deno.test("non capturing groups", async (t) => {
+	await t.step("should not capture non-capturing groups", () => {
+		const r = TypedRegEx("^(?:foo)$")
+		const result = r.captures("foo")
+
+		assertEquals(result, undefined)
+	})
+})
