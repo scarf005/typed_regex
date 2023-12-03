@@ -1,5 +1,7 @@
 # typed_regex
 
+[![deno module](https://shield.deno.dev/x/typed_regex)](https://deno.land/x/typed_regex) [![Tests](https://github.com/scarf005/typed_regex/actions/workflows/test.yml/badge.svg)](https://github.com/scarf005/typed_regex/actions/workflows/test.yml)
+
 type-safe regular expression parser for [named capture groups][named-capture-groups].
 
 ## Features
@@ -13,7 +15,7 @@ type-safe regular expression parser for [named capture groups][named-capture-gro
 The type of the result object is infered from the regular expression.
 
 ```ts
-import { typedRegEx } from "https://deno.land/x/typed_regex/mod.ts"
+import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
 
 const regex = typedRegEx(
 	"^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$",
