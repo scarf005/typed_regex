@@ -20,7 +20,7 @@ import type { TypedRegEx } from "./api_types.ts"
  * @example
  * ```ts
  * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
- * 
+ *
  * const regex = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$", "g")
  * const result = regex.captures("2020-12-02")
  *

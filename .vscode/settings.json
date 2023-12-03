@@ -4,6 +4,7 @@
 	"deno.unstable": true,
 	"deno.config": "./deno.jsonc",
 	"[json][jsonc][markdown][typescript][typescriptreact]": {
+		"editor.insertSpaces": false,
 		"editor.defaultFormatter": "denoland.vscode-deno"
 	}
 }
