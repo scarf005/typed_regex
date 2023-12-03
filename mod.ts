@@ -40,9 +40,7 @@ export const typedRegEx = <const Re extends string, const Flag extends string>(
 	}
 
 	const matchAll = (str: string): RegExMatchAllResult<Re> =>
-		Array
-			.from(str.matchAll(regex))
-			.map((raw) => ({ groups: raw.groups as any, raw }))
+		Array.from(str.matchAll(regex), (raw) => ({ groups: raw.groups as any, raw }))
 
 	const captures = (str: string): RegExCaptureResult<Re> | undefined =>
 		regex.exec(str)?.groups as any
