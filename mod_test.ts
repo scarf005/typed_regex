@@ -57,15 +57,12 @@ Deno.test("#match", async (t) => {
 	await t.step("should extract year/month/day groups", () => {
 		const result = dataRegex.match("2020-12-02")
 
-		assertEquals({ ...result, raw: [...result.raw!] }, {
+		const expected = {
 			matched: true,
 			raw: ["2020-12-02", "2020", "12", "02"],
-			groups: {
-				year: "2020",
-				month: "12",
-				day: "02",
-			},
-		})
+			groups: { year: "2020", month: "12", day: "02" },
+		}
+		assertEquals({ ...result, raw: [...result.raw!] }, expected)
 	})
 
 	await t.step("should return matched: false if string doesnt match pattern", () => {
