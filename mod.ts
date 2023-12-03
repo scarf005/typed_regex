@@ -3,7 +3,7 @@
 // TODO: Create some parse errors in invalid cases
 // TODO: Parse normal captures in a typed tuple?
 
-type ReError<T extends string> = { type: T }
+export type ReError<T extends string> = { type: T }
 
 // Ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp
 type Flag = "d" | "g" | "i" | "m" | "s" | "u" | "y"
@@ -72,7 +72,7 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 * Equivalent to calling [`RegExp#exec`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec) once.
 	 *
 	 * ## Example
-     *
+	 *
 	 * ```ts
 	 * const dataRegex = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
 	 * const result = dataRegex.match("2020-12-02")
@@ -96,7 +96,7 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 * Equivalent to [`String#matchAll`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll). Returns a list of matched results with typed capture groups.
 	 *
 	 * ## Example
-     * 
+	 *
 	 * ```ts
 	 * const namesRegex = typedRegEx(
 	 * 	"((?<firstName>\\w+) (?<middleName>\\w+)? (?<lastName>\\w+))+",

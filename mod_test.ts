@@ -1,4 +1,4 @@
-import { typedRegEx } from "./main.ts"
+import { typedRegEx } from "./mod.ts"
 import { assertEquals } from "./test_deps.ts"
 
 Deno.test("#captures", async (t) => {

@@ -1,5 +1,5 @@
 import { TypedRegEx as TypedRegExOld } from "https://raw.githubusercontent.com/phenax/typed-regex/e98cebaeeea58d7a61bc6aa12243459484870c08/src/index.ts"
-import { typedRegEx } from "./main.ts"
+import { typedRegEx } from "./mod.ts"
 import { assertEquals } from "./test_deps.ts"
 
 const pattern = "((?<firstName>\\w+) (?<middleName>\\w+)? (?<lastName>\\w+))+"
