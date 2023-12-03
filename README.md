@@ -31,6 +31,8 @@ result //=> { year: string, month: string, day: string } | undefined
 If the capture group is marked as optional in the regular expression, the generated type will reflect that
 
 ```ts
+import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+
 const regex = typedRegEx("(?<first>\\d+)/(?<second>\\w+)?", "g")
 const result = regex.captures("1234/foobar")
 

@@ -5,6 +5,9 @@
 		"useTabs": true,
 		"proseWrap": "never"
 	},
+	"imports": {
+		"https://deno.land/x/typed_regex@$MODULE_VERSION/": "./"
+	},
 	"compilerOptions": {
 		"exactOptionalPropertyTypes": true
 	}

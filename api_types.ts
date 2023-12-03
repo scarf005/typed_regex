@@ -16,6 +16,8 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 *
 	 * @example
 	 * ```ts
+     * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+     *
 	 * const r = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
 	 *
 	 * assertEquals(r.isMatch("2020-12-02"), true)
@@ -31,6 +33,8 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 *
 	 * @example
 	 * ```ts
+     * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+     *
 	 * const dataRegex = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
 	 * const result = dataRegex.match("2020-12-02")
 	 *
@@ -56,6 +60,8 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 *
 	 * @example
 	 * ```ts
+     * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+     *
 	 * const namesRegex = typedRegEx(
 	 * 	"((?<firstName>\\w+) (?<middleName>\\w+)? (?<lastName>\\w+))+",
 	 * 	"g",
@@ -80,6 +86,8 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 *
 	 * @example
 	 * ```ts
+     * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+     *
 	 * const regex = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$", "g")
 	 * const result = regex.captures("2020-12-02")
 	 *
@@ -95,6 +103,8 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 *
 	 * @example
 	 * ```ts
+     * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+     * 
 	 * const namesRegex = typedRegEx(
 	 *   "((?<firstName>\\w+) (?<middleName>\\w+)? (?<lastName>\\w+))+",
 	 *   "g",
