@@ -49,44 +49,41 @@ export type RegExMatchAllResult<Re extends string> = {
 	raw: RegExpMatchArray
 }[]
 
-export class TypedRegExT<Re extends string> {
-	private _regexString: Re
-	private _flags: string
+export type TypedRegEx<Re extends string, Flag extends string> = {
+	regexString: Re
+	flags?: FlagChecker<Flag> & Flag | undefined
 
-	private getRegex(): RegExp {
-		return new RegExp(this._regexString, this._flags)
-	}
-
-	constructor(re: Re, flags: string = "") {
-		this._regexString = re
-		this._flags = flags
-	}
-
-	isMatch = (str: string): boolean => this.getRegex().test(str)
-
-	match = (str: string): RegExMatchResult<Re> => {
-		const raw = this.getRegex().exec(str) ?? undefined
-		return {
-			matched: !!raw,
-			groups: raw?.groups as any,
-			raw,
-		}
-	}
-
-	matchAll = (str: string): RegExMatchAllResult<Re> => {
-		const re = this.getRegex()
-		return Array
-			.from(str.matchAll(re))
-			.map((raw) => ({ groups: raw.groups as any, raw }))
-	}
-
-	captures = (str: string): RegExCaptureResult<Re> | undefined => this.match(str).groups
-
-	captureAll = (str: string): (RegExCaptureResult<Re> | undefined)[] =>
-		(this.matchAll(str) as any).map((r: any) => r.groups)
+	isMatch: (str: string) => boolean
+	match: (str: string) => RegExMatchResult<Re>
+	matchAll: (str: string) => RegExMatchAllResult<Re>
+	captures: (str: string) => RegExCaptureResult<Re> | undefined
+	captureAll: (str: string) => (RegExCaptureResult<Re> | undefined)[]
 }
 
-export const TypedRegEx = <Re extends string, Fl extends string>(
-	re: Re,
-	flags?: FlagChecker<Fl> & Fl,
-) => new TypedRegExT(re, flags)
+export const typedRegEx = <const Re extends string, const Flag extends string>(
+	regexString: Re,
+	flags?: FlagChecker<Flag> & Flag,
+): TypedRegEx<Re, Flag> => {
+	const regex = new RegExp(regexString, flags)
+
+	const isMatch = (str: string): boolean => regex.test(str)
+
+	const match = (str: string): RegExMatchResult<Re> => {
+		const raw = regex.exec(str) ?? undefined
+
+		return { matched: !!raw, groups: raw?.groups as any, raw }
+	}
+
+	const matchAll = (str: string): RegExMatchAllResult<Re> =>
+		Array
+			.from(str.matchAll(regex))
+			.map((raw) => ({ groups: raw.groups as any, raw }))
+
+	const captures = (str: string): RegExCaptureResult<Re> | undefined =>
+		regex.exec(str)?.groups as any
+
+	const captureAll = (str: string): (RegExCaptureResult<Re> | undefined)[] =>
+		(matchAll(str) as any).map((r: any) => r.groups)
+
+	return { regexString, flags, isMatch, match, matchAll, captures, captureAll } as const
+}

@@ -1,16 +1,16 @@
-import { TypedRegEx } from "./main.ts"
+import { typedRegEx } from "./main.ts"
 import { assertEquals } from "./test_deps.ts"
 
 Deno.test("#captures", async (t) => {
 	await t.step("should extract year/month/day groups", () => {
-		const r = TypedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
+		const r = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
 		const result = r.captures("2020-12-02")
 
 		assertEquals(result, { year: "2020", month: "12", day: "02" })
 	})
 
 	await t.step("should extract optional groups", () => {
-		const r = TypedRegEx("foo(?<name>.*)?")
+		const r = typedRegEx("foo(?<name>.*)?")
 		const result = r.captures("hello worldfoobar")
 		assertEquals(result, { name: "bar" })
 
@@ -19,7 +19,7 @@ Deno.test("#captures", async (t) => {
 	})
 
 	await t.step("should extract 0 or more (*) applied on capture groups", () => {
-		const r = TypedRegEx("^foo(?<name>\\w)*", "gi")
+		const r = typedRegEx("^foo(?<name>\\w)*", "gi")
 		const result = r.captures("foobar")
 
 		assertEquals(result, { name: "r" })
@@ -27,7 +27,7 @@ Deno.test("#captures", async (t) => {
 })
 
 Deno.test("#captureAll", async (t) => {
-	const namesRegex = TypedRegEx(
+	const namesRegex = typedRegEx(
 		"((?<firstName>\\w+) (?<middleName>\\w+)? (?<lastName>\\w+))+",
 		"g",
 	)
@@ -52,7 +52,7 @@ Deno.test("#captureAll", async (t) => {
 })
 
 Deno.test("#match", async (t) => {
-	const dataRegex = TypedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
+	const dataRegex = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
 
 	await t.step("should extract year/month/day groups", () => {
 		const result = dataRegex.match("2020-12-02")
@@ -76,7 +76,7 @@ Deno.test("#match", async (t) => {
 })
 
 Deno.test("#matchAll", async (t) => {
-	const namesRegex = TypedRegEx(
+	const namesRegex = typedRegEx(
 		"((?<firstName>\\w+) (?<middleName>\\w+)? (?<lastName>\\w+))+",
 		"g",
 	)
@@ -103,7 +103,7 @@ Deno.test("#matchAll", async (t) => {
 
 Deno.test("#isMatch", async (t) => {
 	await t.step("should check if pattern matches year/month/day", () => {
-		const r = TypedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
+		const r = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
 
 		assertEquals(r.isMatch("2020-12-02"), true)
 		assertEquals(r.isMatch("2020-12"), false)
@@ -112,14 +112,14 @@ Deno.test("#isMatch", async (t) => {
 
 Deno.test("flags", async (t) => {
 	await t.step("should allow all allowed flags", () => {
-		TypedRegEx("^foo(?<name>\\w)*", "gimsuy") // `d` unused as it throws a runtime error
+		typedRegEx("^foo(?<name>\\w)*", "gimsuy") // `d` unused as it throws a runtime error
 	})
 })
 
 Deno.test("bugs", async (t) => {
 	await t.step("should not yield ts type error on using non-capturing groups", () => {
 		// https://github.com/phenax/typed-regex/issues/1
-		const r = TypedRegEx("^foo(?:\\w)(?<name>.*)$")
+		const r = typedRegEx("^foo(?:\\w)(?<name>.*)$")
 		const result = r.captures("foobar")
 
 		assertEquals(result?.name, "ar")
@@ -128,8 +128,8 @@ Deno.test("bugs", async (t) => {
 
 Deno.test("non capturing groups", async (t) => {
 	await t.step("should not capture non-capturing groups", () => {
-		const r = TypedRegEx("^(?:foo)$")
-		const result = r.captures("foo")
+		const r = typedRegEx("^(?:foo)$")
+		const result = r.captures("foo") // {} | undefined
 
 		assertEquals(result, undefined)
 	})
