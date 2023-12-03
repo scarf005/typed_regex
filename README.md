@@ -1,56 +1,78 @@
-# typed-regex
-A typescript library for writing type-safe regular expressions using [named capture groups](https://github.com/tc39/proposal-regexp-named-groups).
+# typed_regex
 
-![GitHub Workflow Status (main)](https://img.shields.io/github/workflow/status/phenax/typed-regex/Node.js%20CI/main)
-[![npm](https://img.shields.io/npm/v/typed-regex)](https://www.npmjs.com/package/typed-regex)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/typed-regex)](https://www.npmjs.com/package/typed-regex)
+type-safe regular expression parser for [named capture groups][named-capture-groups].
 
+## Features
 
-
-## Install
-To install the latest stable version of typed-regex -
-```
-yarn add typed-regex
-// OR
-npm install --save typed-regex
-```
-
+- Zero dependency
+- Written fully in TypeScript
+- Ported to deno from [@phenax/typed-regex][repo]
 
 ## Usage
+
 The type of the result object is infered from the regular expression.
 
 ```ts
-import { TypedRegEx } from 'typed-regex';
+import { typedRegEx } from "https://deno.land/x/typed_regex/mod.ts"
 
-const regex = TypedRegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$', 'g');
-const result = regex.captures('2020-12-02');
+const regex = typedRegEx(
+	"^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$",
+	"g",
+)
+const result = regex.captures("2020-12-02")
 
-result // : undefined | { year: string, month: string, day: string }
+result //=> { year: string, month: string, day: string } | undefined
 ```
 
 > NOTE: The regular expression has to be a string literal for the types to be valid
 
+### Optional properties
 
-#### Optional properties
 If the capture group is marked as optional in the regular expression, the generated type will reflect that
 
 ```ts
-const regex = TypedRegEx('(?<first>\\d+)/(?<second>\\w+)?', 'g');
-const result = regex.captures('1234/foobar');
+import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
 
-result // : undefined | { first: string, second?: string }
+const regex = typedRegEx("(?<first>\\d+)/(?<second>\\w+)?", "g")
+const result = regex.captures("1234/foobar")
+
+result //=> { first: string, second: string | undefined } | undefined
 ```
 
+### Non Capturing groups
 
-#### API Docs
-[You can find more information about the library in the API documentation](https://github.com/phenax/typed-regex/blob/main/docs/API.md)
+If the capture group is marked as [non-capturing][non-capturing] in the regular expression, the generated type will ignore it
 
+```ts
+const r = typedRegEx("^(?:foo)$")
+const result = r.captures("foo")
+
+result //=> {} | undefined
+```
 
 ## Browser support
-Named capture groups are supported in [these browsers](https://caniuse.com/mdn-javascript_builtins_regexp_named_capture_groups)
 
+Most modern browsers support named capture groups. For details, check [these browsers][can-i-use]
 
+## Changes from original library
+
+### Breaking Changes
+
+names changed to
+
+- `TypedRegex` -> `typedRegex` (since it's no longer a class but a function)
+- `TypedRegexT` -> `TypedRegex` (since it's no longer a class but a type)
+
+### Internal Changes
+
+- `getRegex()` is now a cached variable instead of a method.
+- `RegExp` is now a closure instead of class.
+
+[named-capture-groups]: https://github.com/tc39/proposal-regexp-named-groups
+[repo]: https://github.com/phenax/typed-regex
+[non-capturing]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Non-capturing_group
+[can-i-use]: https://caniuse.com/mdn-javascript_regular_expressions_named_capturing_group
 
 ## License
-Typed-Regex is licensed under [MIT](./LICENSE)
 
+Typed_Regex is licensed under [MIT](./LICENSE)
