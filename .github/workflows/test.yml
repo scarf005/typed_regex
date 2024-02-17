@@ -34,7 +34,7 @@ jobs:
         with:
           deno-version: ${{ matrix.deno }}
       - name: Run unit tests on Deno
-        run: deno test
+        run: deno test --doc
     #   - uses: actions/setup-node@v2
     #   - name: Build and run unit tests on the npm version
     #     run: deno run -A ./scripts/build_npm.ts
