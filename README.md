@@ -85,4 +85,15 @@ names changed to
 
 ## License
 
-Typed_Regex is licensed under [MIT](./LICENSE)
+**typed_regex** is licensed under [MIT](./LICENSE)
+
+## Contributing
+
+1. for large changes, please open issues before opening PRs.
+2. please verify the changes with:
+
+```sh
+$ deno fmt
+$ deno lint
+$ deno test --doc
+```
