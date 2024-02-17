@@ -6,7 +6,8 @@
 		"proseWrap": "never"
 	},
 	"imports": {
-		"https://deno.land/x/typed_regex@$MODULE_VERSION/": "./"
+		"https://deno.land/x/typed_regex@$MODULE_VERSION/": "./",
+		"https://deno.land/std@$STD_VERSION/": "https://deno.land/std@0.216.0/"
 	},
 	"compilerOptions": {
 		"exactOptionalPropertyTypes": true

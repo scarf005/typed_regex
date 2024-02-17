@@ -17,6 +17,7 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 * @example
 	 * ```ts
 	 * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+	 * import { assertEquals } from "https://deno.land/std@$STD_VERSION/assert/assert_equals.ts"
 	 *
 	 * const r = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
 	 *
@@ -34,10 +35,12 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 * @example
 	 * ```ts
 	 * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+	 * import { assert, assertEquals } from "https://deno.land/std@$STD_VERSION/assert/mod.ts"
 	 *
 	 * const dataRegex = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$")
 	 * const result = dataRegex.match("2020-12-02")
 	 *
+	 * assert(result.matched === true)
 	 * assertEquals({ ...result, raw: [...result.raw!] }, {
 	 * 	matched: true,
 	 * 	raw: ["2020-12-02", "2020", "12", "02"],
@@ -61,6 +64,7 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 * @example
 	 * ```ts
 	 * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+	 * import { assertEquals } from "https://deno.land/std@$STD_VERSION/assert/assert_equals.ts"
 	 *
 	 * const namesRegex = typedRegEx(
 	 * 	"((?<firstName>\\w+) (?<middleName>\\w+)? (?<lastName>\\w+))+",
@@ -87,6 +91,7 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 * @example
 	 * ```ts
 	 * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+	 * import { assertEquals } from "https://deno.land/std@$STD_VERSION/assert/assert_equals.ts"
 	 *
 	 * const regex = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$", "g")
 	 * const result = regex.captures("2020-12-02")
@@ -104,6 +109,7 @@ export type TypedRegEx<Re extends string, Flag extends string> = {
 	 * @example
 	 * ```ts
 	 * import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+	 * import { assertEquals } from "https://deno.land/std@$STD_VERSION/assert/assert_equals.ts"
 	 *
 	 * const namesRegex = typedRegEx(
 	 *   "((?<firstName>\\w+) (?<middleName>\\w+)? (?<lastName>\\w+))+",

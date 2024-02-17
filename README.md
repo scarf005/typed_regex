@@ -1,5 +1,7 @@
 # typed_regex
 
+[![deno module](https://shield.deno.dev/x/typed_regex)](https://deno.land/x/typed_regex) [![Tests](https://github.com/scarf005/typed_regex/actions/workflows/test.yml/badge.svg)](https://github.com/scarf005/typed_regex/actions/workflows/test.yml)
+
 type-safe regular expression parser for [named capture groups][named-capture-groups].
 
 ## Features
@@ -10,18 +12,18 @@ type-safe regular expression parser for [named capture groups][named-capture-gro
 
 ## Usage
 
-The type of the result object is infered from the regular expression.
+The type of the result object is inferred from the regular expression.
 
 ```ts
-import { typedRegEx } from "https://deno.land/x/typed_regex/mod.ts"
+import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+import { assertType, IsExact } from "https://deno.land/std@0.216.0/testing/types.ts"
 
-const regex = typedRegEx(
-	"^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$",
-	"g",
-)
+const regex = typedRegEx("^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$", "g")
 const result = regex.captures("2020-12-02")
 
-result //=> { year: string, month: string, day: string } | undefined
+assertType<IsExact<typeof result, Result>>(true)
+
+type Result = { year: string; month: string; day: string } | undefined
 ```
 
 > NOTE: The regular expression has to be a string literal for the types to be valid
@@ -32,11 +34,14 @@ If the capture group is marked as optional in the regular expression, the genera
 
 ```ts
 import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+import { assertType, IsExact } from "https://deno.land/std@0.216.0/testing/types.ts"
 
 const regex = typedRegEx("(?<first>\\d+)/(?<second>\\w+)?", "g")
 const result = regex.captures("1234/foobar")
 
-result //=> { first: string, second: string | undefined } | undefined
+assertType<IsExact<typeof result, Result>>(true)
+
+type Result = { first: string; second: string | undefined } | undefined
 ```
 
 ### Non Capturing groups
@@ -44,10 +49,15 @@ result //=> { first: string, second: string | undefined } | undefined
 If the capture group is marked as [non-capturing][non-capturing] in the regular expression, the generated type will ignore it
 
 ```ts
-const r = typedRegEx("^(?:foo)$")
-const result = r.captures("foo")
+import { typedRegEx } from "https://deno.land/x/typed_regex@$MODULE_VERSION/mod.ts"
+import { assertType, IsExact } from "https://deno.land/std@0.216.0/testing/types.ts"
 
-result //=> {} | undefined
+const regex = typedRegEx("^(?:foo)$")
+const result = regex.captures("foo")
+
+assertType<IsExact<typeof result, Result>>(true)
+
+type Result = {} | undefined
 ```
 
 ## Browser support
