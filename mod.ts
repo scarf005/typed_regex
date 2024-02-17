@@ -38,7 +38,7 @@ export const typedRegEx = <const Re extends string, const Flag extends string>(
 	const match = (str: string): RegExMatchResult<Re> => {
 		const raw = regex.exec(str) ?? undefined
 
-		return { matched: !!raw, groups: raw?.groups as any, raw }
+		return raw ? { matched: true, groups: raw.groups as any, raw } : { matched: false }
 	}
 
 	const matchAll = (str: string): RegExMatchAllResult<Re> =>
