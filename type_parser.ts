@@ -17,26 +17,32 @@ export type FlagChecker<Fl extends string> =
 			: ReError<`Invalid flag used: ${Fl}`>
 
 // deno-fmt-ignore
-export type NamedCaptureGroup<Re extends string> =
+type NamedCaptureGroupInner<Re extends string> =
 	Re extends ""
 		? {}
 		: Re extends `(?<${infer key}>${infer rest}` // `(?<{key}>{rest}`
 			? rest extends `${infer _})${infer rest}` // `(?<{key}>{_}){rest'}`
 				? rest extends `?${infer rest}` | `*${infer rest}` // `(?<{key}>{_})?{rest''}`
-					? { [k in key]: string | undefined } & RegExCaptureResult<rest>
-					: { [k in key]: string } & RegExCaptureResult<rest>
+					? { [k in key]: string | undefined } & RegExCaptureResultInner<rest>
+					: { [k in key]: string } & RegExCaptureResultInner<rest>
 				: never
 			: Re extends `${infer _}(?<${infer rest}`
-				? RegExCaptureResult<`(?<${rest}`>
+				? RegExCaptureResultInner<`(?<${rest}`>
 				: {}
 
 // deno-fmt-ignore
-export type RegExCaptureResult<Re extends string> =
+type RegExCaptureResultInner<Re extends string> =
 	Re extends ""
 		? {}
 		: Re extends `(?:${infer _})${infer rest}` // `(?:{_}){rest}`
-			? RegExCaptureResult<rest>
-			: NamedCaptureGroup<Re>
+			? RegExCaptureResultInner<rest>
+			: NamedCaptureGroupInner<Re>
+
+export type NamedCaptureGroup<Re extends string> = Id<NamedCaptureGroupInner<Re>>
+export type RegExCaptureResult<Re extends string> = Id<RegExCaptureResultInner<Re>>
+
+// https://old.reddit.com/r/typescript/comments/lknqyz/tool_to_normalize_types_specifically_intersections/
+export type Id<T> = T extends object ? { [P in keyof T]: Id<T[P]> } : T
 
 export type RegExMatchResult<Re extends string> =
 	| { matched: false }
