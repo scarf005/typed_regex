@@ -38,11 +38,9 @@ export type RegExCaptureResult<Re extends string> =
 			? RegExCaptureResult<rest>
 			: NamedCaptureGroup<Re>
 
-export type RegExMatchResult<Re extends string> = {
-	matched: boolean
-	groups: RegExCaptureResult<Re> | undefined
-	raw: RegExpExecArray | undefined
-}
+export type RegExMatchResult<Re extends string> =
+	| { matched: false }
+	| { matched: true; groups: RegExCaptureResult<Re>; raw: RegExpExecArray }
 
 export type RegExMatchAllResult<Re extends string> = {
 	groups: RegExCaptureResult<Re> | undefined

@@ -1,5 +1,5 @@
 import { typedRegEx } from "./mod.ts"
-import { assertEquals } from "./test_deps.ts"
+import { assert, assertEquals } from "./test_deps.ts"
 
 Deno.test("#captures", async (t) => {
 	await t.step("should extract year/month/day groups", () => {
@@ -58,11 +58,13 @@ Deno.test("#match", async (t) => {
 		const result = dataRegex.match("2020-12-02")
 
 		const expected = {
-			matched: true,
+			matched: true as const,
 			raw: ["2020-12-02", "2020", "12", "02"],
 			groups: { year: "2020", month: "12", day: "02" },
 		}
-		assertEquals({ ...result, raw: [...result.raw!] }, expected)
+
+		assert(result.matched === true)
+		assertEquals({ ...result, raw: [...result.raw] }, expected)
 	})
 
 	await t.step("should return matched: false if string doesnt match pattern", () => {
