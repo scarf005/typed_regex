@@ -1,4 +1,11 @@
 {
+	"name": "@scarf/typed-regex",
+	"version": "0.2.0",
+	"exports": {
+		".": "./mod.ts",
+		"./api_types": "./api_types.ts",
+		"./type_parser": "./type_parser.ts"
+	},
 	"fmt": {
 		"semiColons": false,
 		"lineWidth": 100,
